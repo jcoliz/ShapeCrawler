@@ -28,6 +28,16 @@ internal static class UnitConverter
         return (long)(verticalPixels * 914400 / VerticalResolutionDpi);
     }
 
+    internal static long HorizontalPixelToEmu(decimal horizontalPixels)
+    {
+        return (long)(horizontalPixels * 914400 / (decimal)HorizontalResolutionDpi);
+    }
+
+    internal static long VerticalPixelToEmu(decimal verticalPixels)
+    {
+        return (long)(verticalPixels * 914400 / (decimal)VerticalResolutionDpi);
+    }
+
     internal static double EmuToCentimeter(int emu)
     {
         return Math.Round(emu * 0.000002734, 2);

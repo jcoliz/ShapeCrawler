@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
 using ShapeCrawler.Placeholders;
@@ -164,6 +165,9 @@ internal sealed class GroupedShape : IShape
     public ITable AsTable() => this.decoratedShape.AsTable();
     
     public IMediaShape AsMedia() => this.decoratedShape.AsMedia();
+
+    public void SetDecimalDimensions(decimal x, decimal y, decimal width, decimal height)
+        => throw new NotImplementedException();
 
     #endregion Decorated Shape
 }

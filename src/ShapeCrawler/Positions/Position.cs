@@ -25,10 +25,22 @@ internal sealed class Position
         var emus = new Pixels(pixels).AsHorizontalEmus();
         this.AOffset().X = new Int64Value(emus);
     }
-    
+
+    internal void UpdateX(decimal pixels)
+    {
+        var emus = new Pixels(pixels).AsHorizontalEmus();
+        this.AOffset().X = new Int64Value(emus);
+    }
+
     internal int Y() => new Emus(this.AOffset().Y!.Value).AsVerticalPixels();
 
     internal void UpdateY(int pixels)
+    {
+        var emus = new Pixels(pixels).AsVerticalEmus();
+        this.AOffset().Y = new Int64Value(emus);
+    }
+
+    internal void UpdateY(decimal pixels)
     {
         var emus = new Pixels(pixels).AsVerticalEmus();
         this.AOffset().Y = new Int64Value(emus);

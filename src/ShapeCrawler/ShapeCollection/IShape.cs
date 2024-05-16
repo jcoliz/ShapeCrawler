@@ -129,4 +129,13 @@ public interface IShape : IPosition
     ///     Use <see cref="IShape.ShapeType"/> property to check if the shape is an <see cref="PShapeTrPShapeTreeWrappe.Audio"/> or <see cref="PShapeTreeWrap.ShapeType.Video"/>.
     /// </summary>
     IMediaShape AsMedia();
+
+    /// <summary>
+    ///     Set position and dimensions to decimal values in one call
+    /// </summary>
+    /// <param name="x">New X position</param>
+    /// <param name="y">New Y position</param>
+    /// <param name="width">New X width</param>
+    /// <param name="height">New Y width</param>
+    void SetDecimalDimensions(decimal x, decimal y, decimal width, decimal height);
 }

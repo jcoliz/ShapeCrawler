@@ -55,6 +55,14 @@ internal abstract class Shape : IShape
         set => this.size.UpdateHeight(value);
     }
 
+    public void SetDecimalDimensions(decimal x, decimal y, decimal width, decimal height)
+    {
+        this.position.UpdateX(x);
+        this.position.UpdateX(y);
+        this.size.UpdateWidth(width);
+        this.size.UpdateHeight(height);
+    }
+
     public int Id => this.shapeId.Value();
 
     public string Name => this.pShapeTreeElement.NonVisualDrawingProperties().Name!.Value!;

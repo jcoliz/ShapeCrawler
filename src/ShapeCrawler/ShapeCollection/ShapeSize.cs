@@ -20,10 +20,14 @@ internal sealed class ShapeSize
     internal int Height() => UnitConverter.VerticalEmuToPixel(this.AExtents().Cy!);
    
     internal void UpdateHeight(int heightPixels) => this.AExtents().Cy = UnitConverter.VerticalPixelToEmu(heightPixels);
-    
+
+    internal void UpdateHeight(decimal heightPixels) => this.AExtents().Cy = UnitConverter.VerticalPixelToEmu(heightPixels);
+
     internal int Width() => UnitConverter.HorizontalEmuToPixel(this.AExtents().Cx!);
     
     internal void UpdateWidth(int widthPixels) => this.AExtents().Cx = UnitConverter.HorizontalPixelToEmu(widthPixels);
+
+    internal void UpdateWidth(decimal widthPixels) => this.AExtents().Cx = UnitConverter.HorizontalPixelToEmu(widthPixels);
 
     private A.Extents AExtents()
     {
