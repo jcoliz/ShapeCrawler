@@ -106,6 +106,18 @@ internal sealed class GroupedShape : IShape
         }
     }
 
+    public decimal DecimalX
+    {
+        get => this.decoratedShape.DecimalX;
+        set => throw new NotImplementedException();
+    }
+
+    public decimal DecimalY
+    {
+        get => this.decoratedShape.DecimalY;
+        set => throw new NotImplementedException();
+    }
+
     #region Decorated Shape
 
     public int Width
@@ -118,6 +130,18 @@ internal sealed class GroupedShape : IShape
     {
         get => this.decoratedShape.Height;
         set => this.decoratedShape.Height = value;
+    }
+
+    public decimal DecimalWidth
+    {
+        get => this.decoratedShape.DecimalWidth;
+        set => this.decoratedShape.DecimalWidth = value;
+    }
+
+    public decimal DecimalHeight
+    {
+        get => this.decoratedShape.DecimalHeight;
+        set => this.decoratedShape.DecimalHeight = value;
     }
 
     public int Id => this.decoratedShape.Id;
@@ -165,9 +189,6 @@ internal sealed class GroupedShape : IShape
     public ITable AsTable() => this.decoratedShape.AsTable();
     
     public IMediaShape AsMedia() => this.decoratedShape.AsMedia();
-
-    public void SetDecimalDimensions(decimal x, decimal y, decimal width, decimal height)
-        => throw new NotImplementedException();
 
     #endregion Decorated Shape
 }

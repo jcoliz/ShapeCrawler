@@ -24,6 +24,16 @@ public interface IShape : IPosition
     int Height { get; set; }
 
     /// <summary>
+    ///     Gets or sets width of the shape in pixels.
+    /// </summary>
+    decimal DecimalWidth { get; set; }
+
+    /// <summary>
+    ///     Gets or sets height of the shape in pixels.
+    /// </summary>
+    decimal DecimalHeight { get; set; }
+
+    /// <summary>
     ///     Gets identifier of the shape.
     /// </summary>
     int Id { get; }
@@ -129,13 +139,4 @@ public interface IShape : IPosition
     ///     Use <see cref="IShape.ShapeType"/> property to check if the shape is an <see cref="PShapeTrPShapeTreeWrappe.Audio"/> or <see cref="PShapeTreeWrap.ShapeType.Video"/>.
     /// </summary>
     IMediaShape AsMedia();
-
-    /// <summary>
-    ///     Set position and dimensions to decimal values in one call
-    /// </summary>
-    /// <param name="x">New X position</param>
-    /// <param name="y">New Y position</param>
-    /// <param name="width">New X width</param>
-    /// <param name="height">New Y width</param>
-    void SetDecimalDimensions(decimal x, decimal y, decimal width, decimal height);
 }

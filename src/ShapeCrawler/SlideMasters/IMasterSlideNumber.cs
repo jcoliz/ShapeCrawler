@@ -47,4 +47,16 @@ internal sealed class MasterSlideNumber : IMasterSlideNumber
         get => this.position.Y();
         set => this.position.UpdateY(value);
     }
+
+    public decimal DecimalX
+    {
+        get => this.position.X();
+        set => this.position.UpdateX(value);
+    }
+
+    public decimal DecimalY
+    {
+        get => this.position.Y();
+        set => this.position.UpdateY(value);
+    }
 }

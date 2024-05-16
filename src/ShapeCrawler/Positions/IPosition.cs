@@ -15,4 +15,14 @@ public interface IPosition
     ///     Gets or sets y-coordinate of the upper-left corner of the shape in pixels.
     /// </summary>
     int Y { get; set; }
+
+    /// <summary>
+    ///     Gets or sets x-coordinate of the upper-left corner of the shape.
+    /// </summary>
+    decimal DecimalX { get; set; }
+
+    /// <summary>
+    ///     Gets or sets y-coordinate of the upper-left corner of the shape in pixels.
+    /// </summary>
+    decimal DecimalY { get; set; }
 }

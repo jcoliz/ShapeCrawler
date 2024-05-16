@@ -55,12 +55,28 @@ internal abstract class Shape : IShape
         set => this.size.UpdateHeight(value);
     }
 
-    public void SetDecimalDimensions(decimal x, decimal y, decimal width, decimal height)
+    public virtual decimal DecimalX
     {
-        this.position.UpdateX(x);
-        this.position.UpdateX(y);
-        this.size.UpdateWidth(width);
-        this.size.UpdateHeight(height);
+        get => this.position.X();
+        set => this.position.UpdateX(value);
+    }
+
+    public virtual decimal DecimalY
+    {
+        get => this.position.Y();
+        set => this.position.UpdateY(value);
+    }
+
+    public decimal DecimalWidth
+    {
+        get => this.size.Width();
+        set => this.size.UpdateWidth(value);
+    }
+
+    public decimal DecimalHeight
+    {
+        get => this.size.Height();
+        set => this.size.UpdateHeight(value);
     }
 
     public int Id => this.shapeId.Value();
