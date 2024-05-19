@@ -433,15 +433,18 @@ public class ShapeCollectionTests : SCTest
 
         // Act
         shapes.AddPicture(image);
-
-        // Assert
-        var actual = shapes.GetByName<IPicture>("Picture 8");
-        var actual_svg = expected.SvgContent;
-
-        actual_svg.Should().Be(expected_svg);
         pres.Validate();
         var tempdir = Environment.GetEnvironmentVariable("TEMP") ?? throw new ApplicationException("TEMP directory not found");
         pres.SaveAs($"{tempdir}\\AddPicture_svg_with_text_matches_reference.pptx");
+
+        // Assert
+        var actual = shapes.GetByName<IPicture>("Picture 4");
+        var actual_svg = actual.SvgContent;
+
+        // Actual equality is not going to ever pass. The original image has been stripped of non-essential 
+        // markup.
+        // Perhaps use https://learn.microsoft.com/en-us/dotnet/api/microsoft.visualstudio.testtools.uitesting.imagecomparer.compare
+        actual_svg.Should().Be(expected_svg);
     }
 
     [Test]
