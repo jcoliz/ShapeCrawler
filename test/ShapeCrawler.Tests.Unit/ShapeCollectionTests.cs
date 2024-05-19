@@ -416,6 +416,35 @@ public class ShapeCollectionTests : SCTest
     }
 
     [Test]
+    [Explicit]
+    public void AddPicture_svg_with_text_matches_reference()
+    {
+        // Arrange
+
+        // This presentation contains the same SVG we're adding below, manually
+        // dragged in while running PowerPoint
+        var pres = new Presentation(StreamOf("055_svg_with_text.pptx"));
+        var shapes = pres.Slides[0].Shapes;
+        var expected = shapes.GetByName<IPicture>("Original");
+        var expected_svg = expected.SvgContent;
+
+        var image = TestHelper.GetStream("test-vector-image-withtext.svg");
+        image.Position = 0;
+
+        // Act
+        shapes.AddPicture(image);
+
+        // Assert
+        var actual = shapes.GetByName<IPicture>("Picture 8");
+        var actual_svg = expected.SvgContent;
+
+        actual_svg.Should().Be(expected_svg);
+        pres.Validate();
+        var tempdir = Environment.GetEnvironmentVariable("TEMP") ?? throw new ApplicationException("TEMP directory not found");
+        pres.SaveAs($"{tempdir}\\AddPicture_svg_with_text_matches_reference.pptx");
+    }
+
+    [Test]
     public void AddPicture_too_large_adds_picture()
     {
         // Arrange
