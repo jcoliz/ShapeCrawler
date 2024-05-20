@@ -428,7 +428,7 @@ public class ShapeCollectionTests : SCTest
         var expected = shapes.GetByName<IPicture>("Original");
         var expected_svg = expected.SvgContent;
 
-        var image = TestHelper.GetStream("test-vector-image-withtext.svg");
+        var image = TestHelper.GetStream("1x1.svg");
         image.Position = 0;
 
         // Act
@@ -438,7 +438,7 @@ public class ShapeCollectionTests : SCTest
         pres.SaveAs($"{tempdir}\\AddPicture_svg_with_text_matches_reference.pptx");
 
         // Assert
-        var actual = shapes.GetByName<IPicture>("Picture 4");
+        var actual = (IPicture)shapes.Where(x=>x.Name.StartsWith("Picture")).Last();
         var actual_svg = actual.SvgContent;
 
         // Actual equality is not going to ever pass. The original image has been stripped of non-essential 

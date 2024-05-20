@@ -224,6 +224,8 @@
     <EmbeddedResource Include="Resource\test-image-large.png" />
     <None Remove="Resource\test-vector-image-withtext.svg" />
     <EmbeddedResource Include="Resource\test-vector-image-withtext.svg" />
+    <None Remove="Resource\1x1.svg" />
+    <EmbeddedResource Include="Resource\1x1.svg" />
     <None Remove="Resource\055_svg_with_text.pptx" />
     <EmbeddedResource Include="Resource\055_svg_with_text.pptx" />
   </ItemGroup>
