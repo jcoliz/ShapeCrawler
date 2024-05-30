@@ -136,6 +136,22 @@ namespace ShapeCrawler.Tests.Unit.xUnit
         }
 
         [Test]
+        [Explicit]
+        [SlideShape("001.pptx", 1, "TextBox 3")]
+        [SlideShape("001.pptx", 3, "Text Placeholder 3")]
+        public void Text_Setter_doesnt_change_font_size(IShape shape)
+        {
+            // Arrange
+            var expected = shape.TextFrame.Paragraphs[0].Portions[0].Font.Size;
+
+            // Act
+            shape.TextFrame.Text = "New text";
+
+            // Assert
+            shape.TextFrame.Paragraphs[0].Portions[0].Font.Size.Should().Be(expected,$"{shape.Name} text size has changed");
+        }
+
+        [Test]
         public void AutofitType_Setter_resizes_width()
         {
             // Arrange
