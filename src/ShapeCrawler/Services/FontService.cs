@@ -65,8 +65,7 @@ internal static class FontService
             i++;
         }
 
-        const int dpi = 96;
-        var points = Math.Round(paint.TextSize * 72 / dpi, 0);
+        var points = Math.Round(paint.TextSize, 0);
 
         return (int)points;
     }

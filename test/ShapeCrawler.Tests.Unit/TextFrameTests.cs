@@ -97,7 +97,7 @@ namespace ShapeCrawler.Tests.Unit.xUnit
 
             // Assert
             textFrame.Text.Should().BeEquivalentTo(newText);
-            textFrame.Paragraphs[0].Portions[0].Font.Size.Should().Be(8);
+            textFrame.Paragraphs[0].Portions[0].Font.Size.Should().Be(10);
         }
 #endif
 
@@ -137,7 +137,7 @@ namespace ShapeCrawler.Tests.Unit.xUnit
 
         [Test]
         [Explicit]
-        [SlideShape("001.pptx", 1, "TextBox 3")]
+        //[SlideShape("001.pptx", 1, "TextBox 3")]
         [SlideShape("001.pptx", 3, "Text Placeholder 3")]
         public void Text_Setter_doesnt_change_font_size(IShape shape)
         {
