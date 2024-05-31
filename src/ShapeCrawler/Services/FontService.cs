@@ -12,12 +12,15 @@ internal static class FontService
         var surface = SKSurface.Create(new SKImageInfo(shapeWidth, shapeHeight));
         var canvas = surface.Canvas;
 
+        const float dpi = 96f;
+        const float pointsPerInch = 72f;
+    
         var paint = new SKPaint();
-        var fontSize = font.Size;
-        paint.TextSize = fontSize;
+        var fontSizePoints = font.Size;
+        paint.TextSize = fontSizePoints * dpi / pointsPerInch;
         paint.Typeface = SKTypeface.FromFamilyName(font.LatinName);
         paint.IsAntialias = true;
-        const int defaultPaddingSize = 10;
+        const int defaultPaddingSize = 7;
         const int topBottomPadding = defaultPaddingSize * 2;
         var wordMaxY = shapeHeight - topBottomPadding;
 
@@ -64,8 +67,7 @@ internal static class FontService
 
             i++;
         }
-
-        var points = Math.Round(paint.TextSize, 0);
+        var points = Math.Round(paint.TextSize * pointsPerInch / dpi, 0);
 
         return (int)points;
     }

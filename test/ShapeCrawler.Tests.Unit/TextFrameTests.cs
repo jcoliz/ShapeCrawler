@@ -97,7 +97,7 @@ namespace ShapeCrawler.Tests.Unit.xUnit
 
             // Assert
             textFrame.Text.Should().BeEquivalentTo(newText);
-            textFrame.Paragraphs[0].Portions[0].Font.Size.Should().Be(10);
+            textFrame.Paragraphs[0].Portions[0].Font.Size.Should().Be(8);
         }
 #endif
 
