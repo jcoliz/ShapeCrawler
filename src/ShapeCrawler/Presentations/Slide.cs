@@ -3,15 +3,19 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using DocumentFormat.OpenXml;
+using DocumentFormat.OpenXml.Drawing;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Presentation;
 using ShapeCrawler.Drawing;
 using ShapeCrawler.Exceptions;
+using ShapeCrawler.Extensions;
 using ShapeCrawler.ShapeCollection;
 using ShapeCrawler.Shapes;
 using ShapeCrawler.Shared;
 using ShapeCrawler.Texts;
 using SkiaSharp;
+using A = DocumentFormat.OpenXml.Drawing;
+using P = DocumentFormat.OpenXml.Presentation;
 
 // ReSharper disable CheckNamespace
 // ReSharper disable PossibleMultipleEnumeration
@@ -172,8 +176,52 @@ internal sealed class Slide : ISlide
         // ID 3: Notes placeholder
         // ID 4: Slide number placeholder
 
-        var notesPlaceholder = shapes.GetById<RootShape>(3);
-        return notesPlaceholder?.TextFrame;    
+        var notesPlaceholder = shapes.Where(x => x.SDKXPath.StartsWith("/p:notes")).FirstOrDefault();
+        return notesPlaceholder?.TextFrame;
+    }
+    public void AddNotesIfEmpty()
+    {
+        if (SDKSlidePart.NotesSlidePart is not null)
+        {
+            return;
+        }
+
+        // https://learn.microsoft.com/en-us/office/open-xml/presentation/working-with-notes-slides?tabs=cs
+        var rid = SDKSlidePart.NextRelationshipId();
+        NotesSlidePart notesSlidePart1 = SDKSlidePart.AddNewPart<NotesSlidePart>(rid);
+        NotesSlide notesSlide = new NotesSlide
+        (
+            new CommonSlideData
+            (
+                new ShapeTree
+                (
+                    new P.NonVisualGroupShapeProperties
+                    (
+                        new P.NonVisualDrawingProperties() { Id = (UInt32Value)1U, Name = "" },
+                        new P.NonVisualGroupShapeDrawingProperties(),
+                        new ApplicationNonVisualDrawingProperties()
+                    ),
+                    new GroupShapeProperties(new TransformGroup()),
+                    new P.Shape(
+                        new P.NonVisualShapeProperties
+                        (
+                            new P.NonVisualDrawingProperties() { Id = (UInt32Value)2U, Name = "Notes Placeholder 2" },
+                            new P.NonVisualShapeDrawingProperties(new ShapeLocks() { NoGrouping = true }),
+                            new ApplicationNonVisualDrawingProperties(new PlaceholderShape())
+                        ),
+                        new P.ShapeProperties(),
+                        new P.TextBody
+                        (
+                            new BodyProperties(),
+                            new ListStyle(),
+                            new A.Paragraph(new EndParagraphRunProperties())
+                        )
+                    )
+                )
+            ),
+            new ColorMapOverride(new MasterColorMapping())
+        );
+        notesSlidePart1.NotesSlide = notesSlide;
     }
 
     private int ParseNumber()

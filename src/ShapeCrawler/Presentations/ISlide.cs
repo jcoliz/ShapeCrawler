@@ -49,7 +49,7 @@ public interface ISlide
     /// <summary>
     ///     Slide notes as a single text frame.
     /// </summary>
-    public ITextFrame? Notes { get; set; }
+    ITextFrame? Notes { get; }
 
     /// <summary>
     ///     Hides slide.
@@ -70,6 +70,11 @@ public interface ISlide
     ///     Gets table by name.
     /// </summary>
     ITable TableWithName(string table);
+
+    /// <summary>
+    ///     Adds a notes slide if there isn't already one
+    /// </summary>
+    void AddNotesIfEmpty();
     
 #if DEBUG
     
