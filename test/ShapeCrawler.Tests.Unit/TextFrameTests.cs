@@ -513,8 +513,13 @@ namespace ShapeCrawler.Tests.Unit.xUnit
             // Arrange
             var pptxStream = StreamOf("056_slide-notes.pptx");
             var pres = new Presentation(pptxStream);
+            var slide = pres.Slides[0];
+
+            // Act
+            var notes = slide.Notes;
 
             // Assert
+            notes.Text.Should().Contain("NOTES LINE 1");
             pres.Validate();
         }
     }
