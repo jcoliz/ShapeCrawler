@@ -507,7 +507,7 @@ namespace ShapeCrawler.Tests.Unit.xUnit
         }
 
         [Test]
-        public void SlideNotes_get_notes()
+        public void SlideNotes_getter_returns_notes()
         {
             // Arrange
             var pptxStream = StreamOf("056_slide-notes.pptx");
@@ -522,7 +522,7 @@ namespace ShapeCrawler.Tests.Unit.xUnit
         }
 
         [Test]
-        public void SlideNotes_get_null_if_no_notes()
+        public void SlideNotes_getter_returns_null_if_no_notes()
         {
             // Arrange
             var pptxStream = StreamOf("003.pptx");
