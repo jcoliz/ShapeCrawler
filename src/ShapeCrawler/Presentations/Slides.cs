@@ -237,13 +237,15 @@ internal sealed class Slides : ISlides
     {
         foreach (var slideMasterPart in sdkPresDocDest.PresentationPart!.SlideMasterParts)
         {
-            foreach (P.SlideLayoutId pSlideLayoutId in slideMasterPart.SlideMaster.SlideLayoutIdList!
-                         .OfType<P.SlideLayoutId>())
+            var layoutids = slideMasterPart.SlideMaster.SlideLayoutIdList?.OfType<P.SlideLayoutId>();
+            if (layoutids is not null)
             {
-                masterId++;
-                pSlideLayoutId.Id = masterId;
+                foreach (P.SlideLayoutId pSlideLayoutId in layoutids)
+                {
+                    masterId++;
+                    pSlideLayoutId.Id = masterId;
+                }
             }
-
             slideMasterPart.SlideMaster.Save();
         }
     }
