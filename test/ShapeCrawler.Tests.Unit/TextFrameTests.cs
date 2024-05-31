@@ -506,7 +506,6 @@ namespace ShapeCrawler.Tests.Unit.xUnit
             bottomMargin.Should().Be((decimal)expectedMargin);
         }
 
-        [Explicit("Failing test for in-progress feature")]
         [Test]
         public void SlideNotes_getter_returns_notes()
         {
@@ -520,7 +519,21 @@ namespace ShapeCrawler.Tests.Unit.xUnit
 
             // Assert
             notes.Text.Should().Contain("NOTES LINE 1");
-            pres.Validate();
+        }
+
+        [Test]
+        public void SlideNotes_getter_returns_null_if_no_notes()
+        {
+            // Arrange
+            var pptxStream = StreamOf("003.pptx");
+            var pres = new Presentation(pptxStream);
+            var slide = pres.Slides[0];
+
+            // Act
+            var notes = slide.Notes;
+
+            // Assert
+            notes.Should().BeNull();
         }
     }
 }
