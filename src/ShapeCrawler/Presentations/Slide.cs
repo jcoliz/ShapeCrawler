@@ -10,6 +10,7 @@ using ShapeCrawler.Exceptions;
 using ShapeCrawler.ShapeCollection;
 using ShapeCrawler.Shapes;
 using ShapeCrawler.Shared;
+using ShapeCrawler.Texts;
 using SkiaSharp;
 
 // ReSharper disable CheckNamespace
@@ -57,7 +58,7 @@ internal sealed class Slide : ISlide
     }
     public ITextFrame? Notes
     {
-        get => throw new NotImplementedException();
+        get => this.GetNotes();
         set => throw new NotImplementedException();
     }
 
@@ -152,6 +153,27 @@ internal sealed class Slide : ISlide
                     break;
             }
         }
+    }
+
+    private ITextFrame? GetNotes()
+    {
+
+        var notes = SDKSlidePart.NotesSlidePart;
+
+        if (notes is null)
+        {
+            return null;
+        }
+
+        var shapes = new ShapeCollection.Shapes(notes);
+
+        // There are typically three shapes here.
+        // ID 2: Slide image placeholder
+        // ID 3: Notes placeholder
+        // ID 4: Slide number placeholder
+
+        var notesPlaceholder = shapes.GetById<RootShape>(3);
+        return notesPlaceholder?.TextFrame;    
     }
 
     private int ParseNumber()
