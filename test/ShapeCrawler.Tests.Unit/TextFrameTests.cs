@@ -505,5 +505,17 @@ namespace ShapeCrawler.Tests.Unit.xUnit
             // Assert
             bottomMargin.Should().Be((decimal)expectedMargin);
         }
+
+        [Explicit("Failing test for in-progress feature")]
+        [Test]
+        public void SlideNotes_getter_returns_notes()
+        {
+            // Arrange
+            var pptxStream = StreamOf("056_slide-notes.pptx");
+            var pres = new Presentation(pptxStream);
+
+            // Assert
+            pres.Validate();
+        }
     }
 }
