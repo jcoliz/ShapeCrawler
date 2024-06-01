@@ -176,7 +176,13 @@ internal sealed class Slide : ISlide
         // ID 3: Notes placeholder
         // ID 4: Slide number placeholder
 
-        var notesPlaceholder = shapes.Where(x => x.SDKXPath.StartsWith("/p:notes")).FirstOrDefault();
+        var notesPlaceholder = shapes
+            .Where(x => 
+                x.IsPlaceholder && 
+                x.IsTextHolder && 
+                x.PlaceholderType == Placeholders.PlaceholderType.Text
+            )
+            .FirstOrDefault();
         return notesPlaceholder?.TextFrame;
     }
     public void AddNotesIfEmpty()
