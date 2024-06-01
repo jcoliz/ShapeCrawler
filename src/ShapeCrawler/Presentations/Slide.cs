@@ -213,7 +213,7 @@ internal sealed class Slide : ISlide
                         (
                             new P.NonVisualDrawingProperties() { Id = (UInt32Value)2U, Name = "Notes Placeholder 2" },
                             new P.NonVisualShapeDrawingProperties(new ShapeLocks() { NoGrouping = true }),
-                            new ApplicationNonVisualDrawingProperties(new PlaceholderShape())
+                            new ApplicationNonVisualDrawingProperties(new PlaceholderShape() { Type = PlaceholderValues.Body })
                         ),
                         new P.ShapeProperties(),
                         new P.TextBody

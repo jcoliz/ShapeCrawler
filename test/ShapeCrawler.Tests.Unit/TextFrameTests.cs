@@ -535,5 +535,34 @@ namespace ShapeCrawler.Tests.Unit.xUnit
             // Assert
             notes.Should().BeNull();
         }
+
+        [Test]
+        public void SlideAddNotes_adds_notes()
+        {
+            // Arrange
+            var pres = new Presentation();
+            var slide = pres.Slides[0];
+
+            // Act
+            slide.AddNotesIfEmpty();
+            var notes = slide.Notes;
+
+            // Assert
+            notes.Text.Should().Be(String.Empty);
+        }
+
+        [Test]
+        public void NewPresentation_has_no_notes()
+        {
+            // Arrange
+            var pres = new Presentation();
+            var slide = pres.Slides[0];
+
+            // Act
+            var notes = slide.Notes;
+
+            // Assert
+            notes.Should().BeNull();
+        }
     }
 }
