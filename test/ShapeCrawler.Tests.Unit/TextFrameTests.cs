@@ -574,6 +574,31 @@ namespace ShapeCrawler.Tests.Unit.xUnit
         }
 
         [Test]
+        public void SlideAddNotes_can_change_notes_with_many_lines()
+        {
+            // Arrange
+            var pres = new Presentation();
+            var slide = pres.Slides[0];
+            slide.AddNotesIfEmpty();
+            var notes = slide.Notes;
+
+            // Act
+            notes.Paragraphs.Last().Text = "1";
+            notes.Paragraphs.Add();
+            notes.Paragraphs.Last().Text = "2";
+            notes.Paragraphs.Add();
+            notes.Paragraphs.Last().Text = "3";
+
+            // Assert
+            notes.Paragraphs.Should().HaveCount(3);
+            notes.Text.Should().Be("1\r\n2\r\n3");
+            pres.Validate();
+
+            // Just in case you want to check it!
+            // pres.SaveAs($"{Environment.GetEnvironmentVariable("TEMP")}\\SlideAddNotes_can_change_notes_with_many_lines.pptx");
+        }
+
+        [Test]
         public void NewPresentation_has_no_notes()
         {
             // Arrange
