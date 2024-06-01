@@ -552,6 +552,23 @@ namespace ShapeCrawler.Tests.Unit.xUnit
         }
 
         [Test]
+        public void SlideAddNotes_can_change_notes()
+        {
+            // Arrange
+            var pres = new Presentation();
+            var slide = pres.Slides[0];
+            slide.AddNotesIfEmpty();
+            var notes = slide.Notes;
+            var expected = "SlideAddNotes_can_change_notes";
+
+            // Act
+            notes.Text = expected;
+
+            // Assert
+            notes.Text.Should().Be(expected);
+        }
+
+        [Test]
         public void NewPresentation_has_no_notes()
         {
             // Arrange
