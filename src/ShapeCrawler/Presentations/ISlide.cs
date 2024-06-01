@@ -42,14 +42,14 @@ public interface ISlide
     ISlideShapes Shapes { get; }
 
     /// <summary>
+    ///     Gets slide notes as a single text frame.
+    /// </summary>
+    ITextFrame? Notes { get; }
+
+    /// <summary>
     ///     List of all text frames on that slide.
     /// </summary>
     public IList<ITextFrame> TextFrames();
-
-    /// <summary>
-    ///     Slide notes as a single text frame.
-    /// </summary>
-    ITextFrame? Notes { get; }
 
     /// <summary>
     ///     Hides slide.
@@ -72,7 +72,7 @@ public interface ISlide
     ITable TableWithName(string table);
 
     /// <summary>
-    ///     Adds a notes slide if there isn't already one
+    ///     Adds a notes slide if there isn't already one.
     /// </summary>
     void AddNotesIfEmpty();
     
