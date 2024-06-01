@@ -133,6 +133,9 @@ internal sealed class Slide : ISlide
         return returnList;
     }
     
+    /// <summary>
+    ///     Ensure this slide has a notes slide, adding one if needed.
+    /// </summary>
     public void AddNotesIfEmpty()
     {
         if (this.SDKSlidePart.NotesSlidePart is not null)
