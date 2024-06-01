@@ -549,6 +549,7 @@ namespace ShapeCrawler.Tests.Unit.xUnit
 
             // Assert
             notes.Text.Should().Be(String.Empty);
+            pres.Validate();
         }
 
         [Test]
@@ -566,6 +567,10 @@ namespace ShapeCrawler.Tests.Unit.xUnit
 
             // Assert
             notes.Text.Should().Be(expected);
+            pres.Validate();
+
+            // Just in case you want to check it!
+            // pres.SaveAs($"{Environment.GetEnvironmentVariable("TEMP")}\\{expected}.pptx");
         }
 
         [Test]
