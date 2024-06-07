@@ -8,6 +8,7 @@ using ShapeCrawler.Extensions;
 using ShapeCrawler.Placeholders;
 using ShapeCrawler.Shapes;
 using ShapeCrawler.Texts;
+using A = DocumentFormat.OpenXml.Drawing;
 using P = DocumentFormat.OpenXml.Presentation;
 using Position = ShapeCrawler.Positions.Position;
 
@@ -145,6 +146,34 @@ internal abstract class Shape : IShape
         
 
     public virtual Geometry GeometryType => Geometry.Rectangle;
+
+    public decimal? CornerRoundedness
+    {
+        get
+        {
+            var spPr = this.pShapeTreeElement.Descendants<P.ShapeProperties>().First();
+            var aPresetGeometry = spPr.GetFirstChild<A.PresetGeometry>();
+            if (aPresetGeometry?.Preset?.Value != A.ShapeTypeValues.RoundRectangle)
+            {
+                return null;
+            }
+
+            var avList = aPresetGeometry?.AdjustValueList;
+            var sg = avList?.GetFirstChild<A.ShapeGuide>();
+            var val = sg?.Formula?.Value?.Split(' ').Skip(1).SingleOrDefault();
+            if (val is null)
+            {
+                return null;
+            }
+
+            if (!decimal.TryParse(val, out var dVal))
+            {
+                return null;
+            }
+
+            return dVal / 50000m;
+        }
+    }
 
     public string? CustomData
     {

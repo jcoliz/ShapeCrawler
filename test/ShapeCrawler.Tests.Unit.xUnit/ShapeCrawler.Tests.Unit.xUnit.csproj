@@ -232,6 +232,8 @@
     <EmbeddedResource Include="Resource\055_svg_with_text.pptx" />
     <None Remove="Resource\056_slide-notes.pptx" />
     <EmbeddedResource Include="Resource\056_slide-notes.pptx" />
+    <None Remove="Resource\057_corner-radius.pptx" />
+    <EmbeddedResource Include="Resource\057_corner-radius.pptx" />
   </ItemGroup>
 
   <ItemGroup>

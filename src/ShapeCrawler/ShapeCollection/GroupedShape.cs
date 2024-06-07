@@ -159,6 +159,8 @@ internal sealed class GroupedShape : IShape
     
     public OpenXmlElement SDKOpenXmlElement => this.decoratedShape.SDKOpenXmlElement.CloneNode(true);
 
+    public decimal? CornerRoundedness => null;
+
     public void Remove() => this.decoratedShape.Remove();
     
     public ITable AsTable() => this.decoratedShape.AsTable();
