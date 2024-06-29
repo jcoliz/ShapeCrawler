@@ -23,7 +23,7 @@ Fixed adding picture with high resolution</PackageReleaseNotes>
     <GenerateResourceUsePreserializedResources>true</GenerateResourceUsePreserializedResources>
     <Title>ShapeCrawler</Title>
     <Configurations>Debug;Release</Configurations>
-    <Platforms>AnyCPU</Platforms>
+    <Platforms>AnyCPU;ARM64;x64</Platforms>
     <PackageIcon>package-icon.jpg</PackageIcon>
     <Nullable>enable</Nullable>
     <NoWarn>NU1608</NoWarn>
@@ -33,7 +33,7 @@ Fixed adding picture with high resolution</PackageReleaseNotes>
     <None Include="package-icon.jpg" Pack="true" PackagePath="" />
   </ItemGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <DefineConstants>TRACE</DefineConstants>
     <DocumentationFile>bin\Debug\ShapeCrawler.xml</DocumentationFile>
