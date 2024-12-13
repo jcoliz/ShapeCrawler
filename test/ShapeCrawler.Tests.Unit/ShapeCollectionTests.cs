@@ -619,7 +619,7 @@ public class ShapeCollectionTests : SCTest
 
         // Assert
         var roundedRectangle = shapes.Last();
-        roundedRectangle.GeometryType.Should().Be(Geometry.RoundRectangle);
+        roundedRectangle.GeometryType.Should().Be(Geometry.RoundedRectangle);
         roundedRectangle.Name.Should().Be("Rectangle: Rounded Corners");
         roundedRectangle.Outline.HexColor.Should().BeNull();
         pres.Validate();
@@ -637,7 +637,7 @@ public class ShapeCollectionTests : SCTest
 
         // Assert
         var roundedRectangle = shapes.Last();
-        roundedRectangle.GeometryType.Should().Be(Geometry.Round2SameRectangle);
+        roundedRectangle.GeometryType.Should().Be(Geometry.TopCornersRoundedRectangle);
         roundedRectangle.Name.Should().Be("Rectangle: Top Corners Rounded");
         roundedRectangle.Outline.HexColor.Should().BeNull();
         pres.Validate();

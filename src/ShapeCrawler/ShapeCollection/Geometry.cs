@@ -133,9 +133,9 @@ public enum Geometry
     Star32,
 
     /// <summary>
-    ///     Round Rectangle.
+    ///     Rectangle: Rounded Corners
     /// </summary>
-    RoundRectangle,
+    RoundedRectangle,
 
     /// <summary>
     ///     Round1Rectangle.
@@ -143,9 +143,9 @@ public enum Geometry
     Round1Rectangle,
 
     /// <summary>
-    ///     Round2SameRectangle
+    ///     Rectangle: Top Corners Rounded
     /// </summary>
-    Round2SameRectangle,
+    TopCornersRoundedRectangle,
 
     /// <summary>
     ///     Round2DiagonalRectangle
