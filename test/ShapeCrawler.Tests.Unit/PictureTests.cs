@@ -236,4 +236,22 @@ public class PictureTests : SCTest
         var actual = picture.Transparency;
         actual.Should().Be(expected);
     }
+
+    [Test]
+    [SlideShape("060_picture-transparency.pptx", 1, "0%", "0")]
+    [SlideShape("060_picture-transparency.pptx", 1, "20%", "0.2")]
+    [SlideShape("060_picture-transparency.pptx", 1, "50%", "0.5")]
+    [SlideShape("060_picture-transparency.pptx", 1, "80%", "0.8")]
+    [SlideShape("060_picture-transparency.pptx", 1, "100%", "1")]
+    public void Transparency_getter_gets_expected_values(IShape shape, string expectedStr)
+    {
+        // Arrange
+        var expected = decimal.Parse(expectedStr);
+
+        // Act
+        var actual = shape.As<Picture>().Transparency;
+
+        // Assert
+        actual.Should().Be(expected);
+    }
 }
