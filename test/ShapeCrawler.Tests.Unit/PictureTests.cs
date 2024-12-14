@@ -217,4 +217,23 @@ public class PictureTests : SCTest
         var actual = picture.Crop;
         actual.Should().Be(expected);
     }
+
+    [TestCase("0")]
+    [TestCase("1")]
+    [TestCase("0.2")]
+    [TestCase("0.5")]
+    public void Transparency_setter_sets_expected_values(string expectedStr)
+    {
+        // Arrange
+        var expected = decimal.Parse(expectedStr);
+        var pres = new Presentation(StreamOf("059_crop-images.pptx"));
+        var picture = pres.Slides[0].Shapes.GetByName<IPicture>("None");
+
+        // Act
+        picture.Transparency = expected;
+
+        // Assert
+        var actual = picture.Transparency;
+        actual.Should().Be(expected);
+    }
 }
