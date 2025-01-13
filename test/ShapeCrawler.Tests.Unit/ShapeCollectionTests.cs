@@ -359,13 +359,19 @@ public class ShapeCollectionTests : SCTest
         foreach(var kvp in dict)
         {
             TestContext.WriteLine("Image Part: Hash {0} Uri {1}", kvp.Key, kvp.Value.Uri);
+
+            using var stream = kvp.Value.GetStream();
+            var filename = kvp.Value.Uri.ToString().Replace("/", "_");
+            File.Delete(filename);
+            using var outstream = File.OpenWrite(filename);
+            stream.CopyTo(outstream);
         }
     }
 
     [Test]
     [Explicit("A flaky test. Should be fixed")]
     [Category("flaky")]
-    public void AddPicture_should_not_duplicate_the_image_source_When_the_same_svg_image_is_added_twice()
+    public async Task AddPicture_should_not_duplicate_the_image_source_When_the_same_svg_image_is_added_twice()
     {
         // Arrange
         var pres = new Presentation();
@@ -374,6 +380,9 @@ public class ShapeCollectionTests : SCTest
 
         // Act
         shapes.AddPicture(svgImage);
+
+        await Task.Delay(TimeSpan.FromMilliseconds(1001));
+
         shapes.AddPicture(svgImage);
 
         TestContext.WriteLine("Flaky Test: {0}", TestContext.CurrentContext.Test.FullName);
@@ -396,7 +405,7 @@ public class ShapeCollectionTests : SCTest
     [Test]
     [Explicit("A flaky test. Should be fixed")]
     [Category("flaky")]
-    public void AddPicture_should_not_duplicate_the_image_source_When_the_same_svg_image_is_added_on_two_different_slides()
+    public async Task AddPicture_should_not_duplicate_the_image_source_When_the_same_svg_image_is_added_on_two_different_slides()
     {
         // Arrange
         var pres = new Presentation();
@@ -407,6 +416,9 @@ public class ShapeCollectionTests : SCTest
 
         // Act
         shapesSlide1.AddPicture(image);
+
+        await Task.Delay(TimeSpan.FromMilliseconds(1001));
+
         shapesSlide2.AddPicture(image);
 
         TestContext.WriteLine("Flaky Test: {0}", TestContext.CurrentContext.Test.FullName);
@@ -989,7 +1001,7 @@ public class ShapeCollectionTests : SCTest
     [Test]
     [Explicit("A flaky test, should be fixed")]
     [Category("flaky")]
-    public void AddPicture_should_not_duplicate_the_image_source_When_the_same_svg_image_is_added_to_a_loaded_presentation()
+    public async Task AddPicture_should_not_duplicate_the_image_source_When_the_same_svg_image_is_added_to_a_loaded_presentation()
     {
         // Arrange
         var pres = new Presentation();
@@ -1004,6 +1016,7 @@ public class ShapeCollectionTests : SCTest
 
         // Act
         shapes = loadedPres.Slides[0].Shapes;
+        await Task.Delay(TimeSpan.FromMilliseconds(1001));
         shapes.AddPicture(image);
 
         DumpMediaCollection(shapes);
