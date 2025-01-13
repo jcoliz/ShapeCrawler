@@ -5,6 +5,8 @@ using FluentAssertions;
 using ImageMagick;
 using NUnit.Framework;
 using ShapeCrawler.Exceptions;
+using ShapeCrawler.Presentations;
+using ShapeCrawler.ShapeCollection;
 using ShapeCrawler.Tests.Unit.Helpers;
 
 // ReSharper disable SuggestVarOrType_BuiltInTypes
@@ -349,6 +351,17 @@ public class ShapeCollectionTests : SCTest
         pres.Validate();
     }
 
+    private void DumpMediaCollection(ISlideShapes shapes)
+    {
+        var ss = shapes as SlideShapes;
+        var mc = ss.mediaCollection;
+        var dict = mc.imagePartByHash;
+        foreach(var kvp in dict)
+        {
+            TestContext.WriteLine("Image Part: Hash {0} Uri {1}", kvp.Key, kvp.Value.Uri);
+        }
+    }
+
     [Test]
     [Explicit("A flaky test. Should be fixed")]
     [Category("flaky")]
@@ -364,6 +377,7 @@ public class ShapeCollectionTests : SCTest
         shapes.AddPicture(svgImage);
 
         TestContext.WriteLine("Flaky Test: {0}", TestContext.CurrentContext.Test.FullName);
+        DumpMediaCollection(shapes);
 
         // Assert
         var sdkPres = SaveAndOpenPresentationAsSdk(pres);
@@ -396,6 +410,8 @@ public class ShapeCollectionTests : SCTest
         shapesSlide2.AddPicture(image);
 
         TestContext.WriteLine("Flaky Test: {0}", TestContext.CurrentContext.Test.FullName);
+        DumpMediaCollection(shapesSlide1);
+        DumpMediaCollection(shapesSlide2);
 
         // Assert
         var sdkPres = SaveAndOpenPresentationAsSdk(pres);
@@ -983,11 +999,14 @@ public class ShapeCollectionTests : SCTest
         shapes.AddPicture(image);
         var loadedPres = SaveAndOpenPresentation(pres);
 
+        TestContext.WriteLine("Flaky Test: {0}", TestContext.CurrentContext.Test.FullName);
+        DumpMediaCollection(shapes);
+
         // Act
         shapes = loadedPres.Slides[0].Shapes;
         shapes.AddPicture(image);
 
-        TestContext.WriteLine("Flaky Test: {0}", TestContext.CurrentContext.Test.FullName);
+        DumpMediaCollection(shapes);
 
         // Assert
         var sdkPres = SaveAndOpenPresentationAsSdk(loadedPres);
