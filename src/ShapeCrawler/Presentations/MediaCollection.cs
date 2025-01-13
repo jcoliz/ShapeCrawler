@@ -14,7 +14,9 @@ internal class MediaCollection
     /// <summary>
     ///     Reference to every known image part by the hash of its data stream.
     /// </summary>
-    internal readonly Dictionary<string, ImagePart> imagePartByHash = [];
+    private readonly Dictionary<string, ImagePart> imagePartByHash = [];
+
+    public Dictionary<string, ImagePart> ImagePartByHash => this.imagePartByHash;
 
     /// <summary>
     ///     Gets the image part associated with the specified file contents hash.

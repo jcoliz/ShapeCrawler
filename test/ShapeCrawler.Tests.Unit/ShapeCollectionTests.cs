@@ -354,8 +354,8 @@ public class ShapeCollectionTests : SCTest
     private void DumpMediaCollection(ISlideShapes shapes)
     {
         var ss = shapes as SlideShapes;
-        var mc = ss.mediaCollection;
-        var dict = mc.imagePartByHash;
+        var mc = ss.MediaCollection;
+        var dict = mc.ImagePartByHash;
         foreach(var kvp in dict)
         {
             TestContext.WriteLine("Image Part: Hash {0} Uri {1}", kvp.Key, kvp.Value.Uri);

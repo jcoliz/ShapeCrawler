@@ -26,7 +26,7 @@ internal sealed class SlideShapes : ISlideShapes
     private const long DefaultTableWidthEmu = 8128000L;
     private readonly SlidePart sdkSlidePart;
     private readonly IShapes shapes;
-    internal readonly MediaCollection mediaCollection;
+    private readonly MediaCollection mediaCollection;
 
     internal SlideShapes(SlidePart sdkSlidePart, IShapes shapes, MediaCollection mediaCollection)
     {
@@ -36,6 +36,8 @@ internal sealed class SlideShapes : ISlideShapes
     }
 
     public int Count => this.shapes.Count;
+
+    internal MediaCollection MediaCollection => this.mediaCollection;
 
     public IShape this[int index] => this.shapes[index];
 
