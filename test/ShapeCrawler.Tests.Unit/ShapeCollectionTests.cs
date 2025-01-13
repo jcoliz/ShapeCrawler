@@ -366,9 +366,16 @@ public class ShapeCollectionTests : SCTest
         TestContext.WriteLine("Flaky Test: {0}", TestContext.CurrentContext.Test.FullName);
 
         // Assert
-        var checkXml = SaveAndOpenPresentationAsSdk(pres);
-        var imageParts = checkXml.PresentationPart!.SlideParts.SelectMany(slidePart => slidePart.ImageParts).ToArray();
-        imageParts.Length.Should().Be(2,
+        var sdkPres = SaveAndOpenPresentationAsSdk(pres);
+        var imageParts = sdkPres.PresentationPart!.SlideParts.SelectMany(slidePart => slidePart.ImageParts).Select(imagePart => imagePart.Uri)
+            .ToHashSet();
+
+        foreach(var part in imageParts)
+        {
+            TestContext.WriteLine("Image Part: {0}", part);
+        }
+
+        imageParts.Count.Should().Be(2,
             "SVG image adds two parts: One for the vector and one for the auto-generated raster");
     }
     
@@ -394,6 +401,12 @@ public class ShapeCollectionTests : SCTest
         var sdkPres = SaveAndOpenPresentationAsSdk(pres);
         var imageParts = sdkPres.PresentationPart!.SlideParts.SelectMany(slidePart => slidePart.ImageParts).Select(imagePart => imagePart.Uri)
             .ToHashSet();
+
+        foreach(var part in imageParts)
+        {
+            TestContext.WriteLine("Image Part: {0}", part);
+        }
+
         imageParts.Count.Should().Be(2,
             "SVG image adds two parts: One for the vector and one for the auto-generated raster");
     }
@@ -980,6 +993,12 @@ public class ShapeCollectionTests : SCTest
         var sdkPres = SaveAndOpenPresentationAsSdk(loadedPres);
         var imageParts = sdkPres.PresentationPart!.SlideParts.SelectMany(slidePart => slidePart.ImageParts).Select(imagePart => imagePart.Uri)
             .ToHashSet();
+
+        foreach(var part in imageParts)
+        {
+            TestContext.WriteLine("Image Part: {0}", part);
+        }
+
         imageParts.Count.Should().Be(2,
             "SVG image adds two parts: One for the vector and one for the auto-generated raster");
         loadedPres.Validate();
