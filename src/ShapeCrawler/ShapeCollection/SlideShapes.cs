@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
 using ImageMagick;
+using ImageMagick.Formats;
 using ShapeCrawler.Exceptions;
 using ShapeCrawler.Extensions;
 using ShapeCrawler.Presentations;
@@ -36,6 +37,8 @@ internal sealed class SlideShapes : ISlideShapes
     }
 
     public int Count => this.shapes.Count;
+
+    internal MediaCollection MediaCollection => this.mediaCollection;
 
     public IShape this[int index] => this.shapes[index];
 
@@ -147,7 +150,7 @@ internal sealed class SlideShapes : ISlideShapes
                 width = 500;
                 height = (int)(width * skBitmap.Height / (decimal)skBitmap.Width);
             }
-            
+
             pPicture = this.CreatePPicture(image, "Picture");
         }
         else
@@ -166,14 +169,14 @@ internal sealed class SlideShapes : ISlideShapes
             {
                 imageMagick.Resize((uint)width, (uint)height);
             }
-            
+
             var rasterStream = new MemoryStream();
-            imageMagick.Write(rasterStream);
+            imageMagick.Write(rasterStream, new PngWriteDefines() { IncludeChunks = PngChunkFlags.None });
             image.Position = 0;
             rasterStream.Position = 0;
             pPicture = this.CreateSvgPPicture(rasterStream, image, "Picture");
         }
-        
+
         // Fix up the sizes
         var xEmu = UnitConverter.HorizontalPixelToEmu(100m);
         var yEmu = UnitConverter.VerticalPixelToEmu(100m);

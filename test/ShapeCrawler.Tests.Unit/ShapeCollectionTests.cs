@@ -5,6 +5,8 @@ using FluentAssertions;
 using ImageMagick;
 using NUnit.Framework;
 using ShapeCrawler.Exceptions;
+using ShapeCrawler.Presentations;
+using ShapeCrawler.ShapeCollection;
 using ShapeCrawler.Tests.Unit.Helpers;
 
 // ReSharper disable SuggestVarOrType_BuiltInTypes
@@ -349,9 +351,27 @@ public class ShapeCollectionTests : SCTest
         pres.Validate();
     }
 
+    private void DumpMediaCollection(ISlideShapes shapes)
+    {
+        var ss = shapes as SlideShapes;
+        var mc = ss.MediaCollection;
+        var dict = mc.ImagePartByHash;
+        foreach(var kvp in dict)
+        {
+            TestContext.WriteLine("Image Part: Hash {0} Uri {1}", kvp.Key, kvp.Value.Uri);
+
+            using var stream = kvp.Value.GetStream();
+            var filename = kvp.Value.Uri.ToString().Replace("/", "_");
+            File.Delete(filename);
+            using var outstream = File.OpenWrite(filename);
+            stream.CopyTo(outstream);
+        }
+    }
+
     [Test]
     [Explicit("A flaky test. Should be fixed")]
-    public void AddPicture_should_not_duplicate_the_image_source_When_the_same_svg_image_is_added_twice()
+    [Category("flaky")]
+    public async Task AddPicture_should_not_duplicate_the_image_source_When_the_same_svg_image_is_added_twice()
     {
         // Arrange
         var pres = new Presentation();
@@ -360,18 +380,32 @@ public class ShapeCollectionTests : SCTest
 
         // Act
         shapes.AddPicture(svgImage);
+
+        await Task.Delay(TimeSpan.FromMilliseconds(1001));
+
         shapes.AddPicture(svgImage);
 
+        TestContext.WriteLine("Flaky Test: {0}", TestContext.CurrentContext.Test.FullName);
+        DumpMediaCollection(shapes);
+
         // Assert
-        var checkXml = SaveAndOpenPresentationAsSdk(pres);
-        var imageParts = checkXml.PresentationPart!.SlideParts.SelectMany(slidePart => slidePart.ImageParts).ToArray();
-        imageParts.Length.Should().Be(2,
+        var sdkPres = SaveAndOpenPresentationAsSdk(pres);
+        var imageParts = sdkPres.PresentationPart!.SlideParts.SelectMany(slidePart => slidePart.ImageParts).Select(imagePart => imagePart.Uri)
+            .ToHashSet();
+
+        foreach(var part in imageParts)
+        {
+            TestContext.WriteLine("Image Part: {0}", part);
+        }
+
+        imageParts.Count.Should().Be(2,
             "SVG image adds two parts: One for the vector and one for the auto-generated raster");
     }
     
     [Test]
     [Explicit("A flaky test. Should be fixed")]
-    public void AddPicture_should_not_duplicate_the_image_source_When_the_same_svg_image_is_added_on_two_different_slides()
+    [Category("flaky")]
+    public async Task AddPicture_should_not_duplicate_the_image_source_When_the_same_svg_image_is_added_on_two_different_slides()
     {
         // Arrange
         var pres = new Presentation();
@@ -382,12 +416,25 @@ public class ShapeCollectionTests : SCTest
 
         // Act
         shapesSlide1.AddPicture(image);
+
+        await Task.Delay(TimeSpan.FromMilliseconds(1001));
+
         shapesSlide2.AddPicture(image);
+
+        TestContext.WriteLine("Flaky Test: {0}", TestContext.CurrentContext.Test.FullName);
+        DumpMediaCollection(shapesSlide1);
+        DumpMediaCollection(shapesSlide2);
 
         // Assert
         var sdkPres = SaveAndOpenPresentationAsSdk(pres);
         var imageParts = sdkPres.PresentationPart!.SlideParts.SelectMany(slidePart => slidePart.ImageParts).Select(imagePart => imagePart.Uri)
             .ToHashSet();
+
+        foreach(var part in imageParts)
+        {
+            TestContext.WriteLine("Image Part: {0}", part);
+        }
+
         imageParts.Count.Should().Be(2,
             "SVG image adds two parts: One for the vector and one for the auto-generated raster");
     }
@@ -953,7 +1000,8 @@ public class ShapeCollectionTests : SCTest
     
     [Test]
     [Explicit("A flaky test, should be fixed")]
-    public void AddPicture_should_not_duplicate_the_image_source_When_the_same_svg_image_is_added_to_a_loaded_presentation()
+    [Category("flaky")]
+    public async Task AddPicture_should_not_duplicate_the_image_source_When_the_same_svg_image_is_added_to_a_loaded_presentation()
     {
         // Arrange
         var pres = new Presentation();
@@ -963,14 +1011,26 @@ public class ShapeCollectionTests : SCTest
         shapes.AddPicture(image);
         var loadedPres = SaveAndOpenPresentation(pres);
 
+        TestContext.WriteLine("Flaky Test: {0}", TestContext.CurrentContext.Test.FullName);
+        DumpMediaCollection(shapes);
+
         // Act
         shapes = loadedPres.Slides[0].Shapes;
+        await Task.Delay(TimeSpan.FromMilliseconds(1001));
         shapes.AddPicture(image);
+
+        DumpMediaCollection(shapes);
 
         // Assert
         var sdkPres = SaveAndOpenPresentationAsSdk(loadedPres);
         var imageParts = sdkPres.PresentationPart!.SlideParts.SelectMany(slidePart => slidePart.ImageParts).Select(imagePart => imagePart.Uri)
             .ToHashSet();
+
+        foreach(var part in imageParts)
+        {
+            TestContext.WriteLine("Image Part: {0}", part);
+        }
+
         imageParts.Count.Should().Be(2,
             "SVG image adds two parts: One for the vector and one for the auto-generated raster");
         loadedPres.Validate();
