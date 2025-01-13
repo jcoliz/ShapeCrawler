@@ -363,6 +363,8 @@ public class ShapeCollectionTests : SCTest
         shapes.AddPicture(svgImage);
         shapes.AddPicture(svgImage);
 
+        TestContext.WriteLine("Flaky Test: {0}", TestContext.CurrentContext.Test.DisplayName);
+
         // Assert
         var checkXml = SaveAndOpenPresentationAsSdk(pres);
         var imageParts = checkXml.PresentationPart!.SlideParts.SelectMany(slidePart => slidePart.ImageParts).ToArray();
@@ -385,6 +387,8 @@ public class ShapeCollectionTests : SCTest
         // Act
         shapesSlide1.AddPicture(image);
         shapesSlide2.AddPicture(image);
+
+        TestContext.WriteLine("Flaky Test: {0}", TestContext.CurrentContext.Test.DisplayName);
 
         // Assert
         var sdkPres = SaveAndOpenPresentationAsSdk(pres);
@@ -418,7 +422,6 @@ public class ShapeCollectionTests : SCTest
     
     [Test]
     [Explicit("Should be fixed")]
-    [Category("flaky")]
     public void AddPicture_should_not_duplicate_the_image_source_When_slide_is_copied()
     {
         // Arrange
@@ -956,6 +959,7 @@ public class ShapeCollectionTests : SCTest
     
     [Test]
     [Explicit("A flaky test, should be fixed")]
+    [Category("flaky")]
     public void AddPicture_should_not_duplicate_the_image_source_When_the_same_svg_image_is_added_to_a_loaded_presentation()
     {
         // Arrange
@@ -969,6 +973,8 @@ public class ShapeCollectionTests : SCTest
         // Act
         shapes = loadedPres.Slides[0].Shapes;
         shapes.AddPicture(image);
+
+        TestContext.WriteLine("Flaky Test: {0}", TestContext.CurrentContext.Test.DisplayName);
 
         // Assert
         var sdkPres = SaveAndOpenPresentationAsSdk(loadedPres);
