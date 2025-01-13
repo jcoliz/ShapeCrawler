@@ -363,7 +363,7 @@ public class ShapeCollectionTests : SCTest
         shapes.AddPicture(svgImage);
         shapes.AddPicture(svgImage);
 
-        TestContext.WriteLine("Flaky Test: {0}", TestContext.CurrentContext.Test.DisplayName);
+        TestContext.WriteLine("Flaky Test: {0}", TestContext.CurrentContext.Test.FullName);
 
         // Assert
         var checkXml = SaveAndOpenPresentationAsSdk(pres);
@@ -388,7 +388,7 @@ public class ShapeCollectionTests : SCTest
         shapesSlide1.AddPicture(image);
         shapesSlide2.AddPicture(image);
 
-        TestContext.WriteLine("Flaky Test: {0}", TestContext.CurrentContext.Test.DisplayName);
+        TestContext.WriteLine("Flaky Test: {0}", TestContext.CurrentContext.Test.FullName);
 
         // Assert
         var sdkPres = SaveAndOpenPresentationAsSdk(pres);
@@ -974,7 +974,7 @@ public class ShapeCollectionTests : SCTest
         shapes = loadedPres.Slides[0].Shapes;
         shapes.AddPicture(image);
 
-        TestContext.WriteLine("Flaky Test: {0}", TestContext.CurrentContext.Test.DisplayName);
+        TestContext.WriteLine("Flaky Test: {0}", TestContext.CurrentContext.Test.FullName);
 
         // Assert
         var sdkPres = SaveAndOpenPresentationAsSdk(loadedPres);
